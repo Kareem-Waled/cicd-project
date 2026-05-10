@@ -1,10 +1,10 @@
 pipeline {
 
-  agent { label 'EC2-Linux' }
+  agent { label 'docker-sq-tv' }
 
   environment {
     AWS_REGION = 'us-east-1'
-    ECR_URI    = '123456789.dkr.ecr.us-east-1.amazonaws.com/cicd-project'
+    ECR_URI    = '314694590636.dkr.ecr.us-east-1.amazonaws.com/digi/jenkins'
     IMAGE_TAG  = "${BUILD_NUMBER}"
   }
 
@@ -14,7 +14,7 @@ pipeline {
     stage('Checkout') {
       steps {
         git branch: 'main',
-            url: 'https://github.com/YOUR_USERNAME/cicd-project.git'
+            url: 'https://github.com/AbdelrhmanEzzat/cicd-project.git'
       }
     }
 
