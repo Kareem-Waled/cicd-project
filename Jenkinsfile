@@ -92,7 +92,12 @@ pipeline {
     // ── 8. PUSH TO ECR ─────────────────────────────────────
     stage('Push to ECR') {
       steps {
-        withAWS(credentials: 'aws-creds', region: "${AWS_REGION}") {
+        withCredentials([[
+          $class: 'AmazonWebServicesCredentialsBinding',
+          credentialsId: 'aws-creds',
+          accessKeyVariable: 'AWS_ACCESS_KEY_ID',
+          secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
+        ]]) {
           sh """
             aws ecr get-login-password --region ${AWS_REGION} | \
               docker login --username AWS --password-stdin ${ECR_URI}
@@ -103,21 +108,23 @@ pipeline {
     }
 
     // ── 9. DEPLOY ──────────────────────────────────────────
+
     stage('Deploy to EC2') {
       agent { label 'deploy' }
       steps {
-        withAWS(credentials: 'aws-creds', region: "${AWS_REGION}") {
+        withCredentials([[
+          $class: 'AmazonWebServicesCredentialsBinding',
+          credentialsId: 'aws-creds',
+          accessKeyVariable: 'AWS_ACCESS_KEY_ID',
+          secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
+        ]]) {
           sh """
             aws ecr get-login-password --region ${AWS_REGION} | \
               docker login --username AWS --password-stdin ${ECR_URI}
-
             docker stop cicd-project || true
             docker rm   cicd-project || true
-
             docker pull ${ECR_URI}:${IMAGE_TAG}
             docker run -d --name cicd-project -p 3000:3000 ${ECR_URI}:${IMAGE_TAG}
-
-            echo "Deployed: ${ECR_URI}:${IMAGE_TAG}"
           """
         }
       }
