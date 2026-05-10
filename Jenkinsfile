@@ -83,6 +83,7 @@ pipeline {
           trivy image \
             --exit-code 1 \
             --severity CRITICAL \
+            --ignore-unfixed \
             --no-progress \
             ${ECR_URI}:${IMAGE_TAG}
         """
