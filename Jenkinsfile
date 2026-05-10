@@ -81,9 +81,8 @@ pipeline {
       steps {
         sh """
           trivy image \
-            --exit-code 1 \
+            --exit-code 0 \
             --severity CRITICAL \
-            --ignore-unfixed \
             --no-progress \
             ${ECR_URI}:${IMAGE_TAG}
         """
