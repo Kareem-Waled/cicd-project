@@ -230,3 +230,6 @@ sudo ./svc.sh start
 
 # check status
 sudo ./svc.sh status
+
+# check runner service logs
+sudo journalctl -u actions.runner.AbdelrhmanEzzat-cicd-project.node-runner.service -f
