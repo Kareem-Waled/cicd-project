@@ -224,3 +224,9 @@ GitHub → Webhook → Jenkins
   → Push to ECR ✅
   → Deploy ✅
 ```
+# install as service
+sudo ./svc.sh install
+sudo ./svc.sh start
+
+# check status
+sudo ./svc.sh status
