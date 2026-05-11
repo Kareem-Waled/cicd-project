@@ -1,0 +1,44 @@
+
+name: CI Pipeline
+
+# WHEN to run
+
+on:
+
+  push:
+
+    branches: [main]
+
+  pull_request:
+
+    branches: [main]
+
+# WHAT to run
+
+jobs:
+
+  build:
+
+    # WHERE to run
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+    # STEP 1: Checkout code
+
+    - uses: actions/checkout@v4
+
+    # STEP 2: Setup Node
+
+    - uses: actions/setup-node@v4
+
+      with:
+
+        node-version: '18'
+
+    # STEP 3: Run commands
+
+    - run: npm install
+
+    - run: npm test
