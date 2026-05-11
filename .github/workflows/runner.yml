@@ -6,7 +6,7 @@ on:
 
 jobs:
   build-and-test:
-    runs-on: node-runner        # ← your runner name
+    runs-on: self-hosted       # ← your runner name
 
     steps:
     - name: Checkout code
