@@ -1,5 +1,5 @@
 # CI/CD Project — Docker + ECR + Deploy + Trivy + SonarQube
-
+ 
 ## 📁 Project Structure
 
 ```
