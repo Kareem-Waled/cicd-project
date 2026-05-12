@@ -1,44 +1,26 @@
-
-name: CI Pipeline
-
-# WHEN to run
+name: CI Pipeline - Hosted Runner
 
 on:
-
   push:
-
     branches: [main]
-
   pull_request:
-
     branches: [main]
-
-# WHAT to run
 
 jobs:
-
-  build:
-
-    # WHERE to run
-
+  build-and-test:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-    # STEP 1: Checkout code
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
 
-    - uses: actions/checkout@v4
+      - name: Install dependencies
+        run: npm install
 
-    # STEP 2: Setup Node
-
-    - uses: actions/setup-node@v4
-
-      with:
-
-        node-version: '18'
-
-    # STEP 3: Run commands
-
-    - run: npm install
-
-    - run: npm test
+      - name: Run tests
+        run: npm test
